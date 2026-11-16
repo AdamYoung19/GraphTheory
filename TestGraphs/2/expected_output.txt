@@ -1,0 +1,24 @@
+Adjacency Matrix (undirected):
+  abcdefg
+a 0111000
+b 1010100
+c 1100111
+d 1000010
+e 0110000
+f 0011000
+g 0010000
+
+BFS: abcdefg
+DFS: adfcgeb
+
+Adjacency Matrix (directed w/weights):
+  abcdefg
+a 0269000
+b 0000106
+c 0001000
+d 0000700
+e 0020004
+f 0100000
+g 0000050
+
+Dijkstra's: a:0,b:2,c:5,d:6,e:3,f:12,g:7
