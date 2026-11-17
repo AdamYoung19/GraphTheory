@@ -4,12 +4,16 @@ import java.util.ArrayList;
 import java.util.Queue;
 import java.util.LinkedList;
 import java.util.Stack;
+import java.io.PrintWriter;
 
 
 public class Main {
 
     public static void main(String[] args) {
         try {
+            PrintWriter out = new PrintWriter("output.txt");
+
+
             Scanner scanner = new Scanner(new File("input.txt"));
             ArrayList<String> lines = new ArrayList<>();
 
@@ -43,26 +47,26 @@ public class Main {
             }            
       }
 
-      //Test matrix build
-      System.out.println();
-      System.out.println("Adjacency Matrix: (undirected)");
-      System.out.print(" ");
+      //Output matrix build
+      out.println();
+      out.println("Adjacency Matrix: (undirected)");
+      out.print(" ");
       for (int i = 0; i < numVertices; i++) {
-          System.out.print((char)('a' + i));
+          out.print((char)('a' + i));
       }
-      System.out.println();
+      out.println();
 
       for (int i = 0; i < numVertices; i++) {
-        System.out.print((char)('a' + i) + " ");
+        out.print((char)('a' + i) + " ");
         for (int j = 0; j < numVertices; j++) {
-            System.out.print(adjMat[i][j]);
+            out.print(adjMat[i][j]);
         }
-        System.out.println();
+        out.println();
       }
 
     //----------------BFS----------------------------------
-    System.out.println();
-    System.out.println("BFS: ");
+    out.println();
+    out.println("BFS: ");
     boolean[] visited = new boolean[numVertices];
     Queue<Integer> queue = new LinkedList<>();
 
@@ -76,7 +80,7 @@ public class Main {
         int current = queue.poll();
 
         //convert int back to char
-        System.out.print((char) (current + 'a'));
+        out.print((char) (current + 'a'));
 
         //find unvisited neighbords and add to queue
         for (int i = 0; i < numVertices; i++) {
@@ -86,11 +90,11 @@ public class Main {
             }
         }
     }
-    System.out.println();
+        out.println();
 
 
     // -----------------DFS----------------------------------
-    System.out.println("DFS: ");
+    out.println("DFS: ");
     boolean[] visitedDFS = new boolean[numVertices];
     Stack<Integer> stack = new Stack<>();
 
@@ -104,7 +108,7 @@ public class Main {
         int current = stack.pop();
 
         //convert int back to char
-        System.out.print((char) (current + 'a'));
+        out.print((char) (current + 'a'));
 
         //find unvisited neighbords and add to stack
         for (int i = 0; i < numVertices; i++) {
@@ -115,7 +119,7 @@ public class Main {
         }
     }
 
-    System.out.println();
+    out.println();
 
     // ------Weighted Graphs-----------------
 
@@ -154,18 +158,18 @@ public class Main {
     }
 
     // Print for weighted matrix
-    System.out.println();
-    System.out.println("Adjacency Matrix (directed w/weights):");
-    System.out.print(" ");
-    for (int i = 0; i < numVertices; i++) System.out.print((char)('a' + i));
-    System.out.println();
+    out.println();
+    out.println("Adjacency Matrix (directed w/weights):");
+    out.print(" ");
+    for (int i = 0; i < numVertices; i++) out.print((char)('a' + i));
+    out.println();
 
     for (int i = 0; i < numVertices; i++) {
-        System.out.print((char)('a' + i) + " ");
+        out.print((char)('a' + i) + " ");
         for (int j = 0; j < numVertices; j++) {
-            System.out.print(adjMatWeighted[i][j]);
+            out.print(adjMatWeighted[i][j]);
         }
-        System.out.println();
+        out.println();
     }
 
 
@@ -208,25 +212,21 @@ public class Main {
 
     // Print Dijkstra
 
-    System.out.println();
-    System.out.print("Dijkstra's: ");
+    out.println();
+    out.print("Dijkstra's: ");
     for (int i = 0; i < numVertices; i++) {
-        System.out.print((char)('a' + i) + ":" + distances[i]);
-        if (i < numVertices - 1) System.out.print(",");
+        out.print((char)('a' + i) + ":" + distances[i]);
+        if (i < numVertices - 1) out.print(",");
     }
-    System.out.println();
+    out.println();
 
-    
+    out.close();
+
+    System.out.println("Succesfful run, check output.txt");
 
     }catch (Exception e) {
         e.printStackTrace();
     }
-
-
-
-    
-
-
     }
     
 }
