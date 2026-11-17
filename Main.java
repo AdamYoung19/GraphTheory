@@ -66,7 +66,7 @@ public class Main {
 
     //----------------BFS----------------------------------
     out.println();
-    out.println("BFS: ");
+    out.print("BFS: ");
     boolean[] visited = new boolean[numVertices];
     Queue<Integer> queue = new LinkedList<>();
 
@@ -94,7 +94,7 @@ public class Main {
 
 
     // -----------------DFS----------------------------------
-    out.println("DFS: ");
+    out.print("DFS: ");
     boolean[] visitedDFS = new boolean[numVertices];
     Stack<Integer> stack = new Stack<>();
 

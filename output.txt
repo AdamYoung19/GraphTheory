@@ -11,10 +11,8 @@ g 000001011
 h 000000100
 i 000000100
 
-BFS: 
-acdebfghi
-DFS: 
-acedfgihb
+BFS: acdebfghi
+DFS: acedfgihb
 
 Adjacency Matrix (directed w/weights):
  abcdefghi
