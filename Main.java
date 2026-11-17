@@ -44,25 +44,25 @@ public class Main {
       }
 
       //Test matrix build
+      System.out.println();
+      System.out.println("Adjacency Matrix: (undirected)");
+      System.out.print(" ");
+      for (int i = 0; i < numVertices; i++) {
+          System.out.print((char)('a' + i));
+      }
+      System.out.println();
 
-    //   System.out.println("Adjacency Matrix:");
-    //   System.out.print(" ");
-    //   for (int i = 0; i < numVertices; i++) {
-    //       System.out.print((char)('a' + i));
-    //   }
-    //   System.out.println();
-
-    //   for (int i = 0; i < numVertices; i++) {
-    //     System.out.print((char)('a' + i) + " ");
-    //     for (int j = 0; j < numVertices; j++) {
-    //         System.out.print(adjMat[i][j]);
-    //     }
-    //     System.out.println();
-    //   }
+      for (int i = 0; i < numVertices; i++) {
+        System.out.print((char)('a' + i) + " ");
+        for (int j = 0; j < numVertices; j++) {
+            System.out.print(adjMat[i][j]);
+        }
+        System.out.println();
+      }
 
     //----------------BFS----------------------------------
-    
-    System.out.print("BFS: ");
+    System.out.println();
+    System.out.println("BFS: ");
     boolean[] visited = new boolean[numVertices];
     Queue<Integer> queue = new LinkedList<>();
 
@@ -90,8 +90,7 @@ public class Main {
 
 
     // -----------------DFS----------------------------------
-
-    System.out.print("DFS: ");
+    System.out.println("DFS: ");
     boolean[] visitedDFS = new boolean[numVertices];
     Stack<Integer> stack = new Stack<>();
 
@@ -117,6 +116,107 @@ public class Main {
     }
 
     System.out.println();
+
+    // ------Weighted Graphs-----------------
+
+    Scanner scannerWeighted = new Scanner(new File("input_weights.txt"));
+    ArrayList<String> linesWeighted = new ArrayList<>();
+
+    while (scannerWeighted.hasNextLine()) {
+        String line = scannerWeighted.nextLine().trim();
+        if (!line.isEmpty()) linesWeighted.add(line);
+    }
+
+    scannerWeighted.close();
+
+    int[][] adjMatWeighted = new int[numVertices][numVertices];
+
+    for (String line : linesWeighted) {
+        String[] parts = line.split(":");
+        char fromNode = parts[0].charAt(0);
+        int u = fromNode - 'a'; //row index
+
+        //if theres neighbors, split and get weights
+
+        if (parts.length > 1 && !parts[1].isEmpty()) {
+            String[] neighbors = parts[1].split(",");
+
+            for (String n : neighbors) {
+                String[] edgeParts = n.split("_");
+                char toNode = edgeParts[0].charAt(0);
+                int weight = Integer.parseInt(edgeParts[1]);
+
+                int v = toNode - 'a'; // column index
+                adjMatWeighted[u][v] = weight; //set weight in adjacency matrix
+
+            }
+        }
+    }
+
+    // Print for weighted matrix
+    System.out.println();
+    System.out.println("Adjacency Matrix (directed w/weights):");
+    System.out.print(" ");
+    for (int i = 0; i < numVertices; i++) System.out.print((char)('a' + i));
+    System.out.println();
+
+    for (int i = 0; i < numVertices; i++) {
+        System.out.print((char)('a' + i) + " ");
+        for (int j = 0; j < numVertices; j++) {
+            System.out.print(adjMatWeighted[i][j]);
+        }
+        System.out.println();
+    }
+
+
+    //-----------------Dijkstra's Algorithm-----------------
+    
+
+    int[] distances = new int[numVertices];
+    boolean[] vistedDijkstra = new boolean[numVertices];
+
+    //Set all distances to infinity
+    for (int i = 0; i < numVertices; i++) distances[i] = Integer.MAX_VALUE;
+   
+    //Set cost of vertex a to 0
+    distances[startVertex] = 0; 
+
+    //visit all vertex
+    for (int count = 0; count < numVertices; count++) {
+        int minDistance = Integer.MAX_VALUE;
+        int u = -1;
+
+        for (int i = 0; i < numVertices; i++) {
+            if (!vistedDijkstra[i] && distances[i] <= minDistance) {
+                minDistance = distances[i];
+                u = i;
+            }
+        }
+
+        //mark picked vertex as visited
+            if (u != -1){
+                vistedDijkstra[u] = true;
+                for (int v = 0; v < numVertices; v++){
+                    if (!vistedDijkstra[v] && adjMatWeighted[u][v] > 0
+                     && distances[u] != Integer.MAX_VALUE 
+                     && distances[u] + adjMatWeighted[u][v] < distances[v]) {
+                    distances[v] = distances[u] + adjMatWeighted[u][v];
+                }
+            }
+        }
+    }
+
+    // Print Dijkstra
+
+    System.out.println();
+    System.out.print("Dijkstra's: ");
+    for (int i = 0; i < numVertices; i++) {
+        System.out.print((char)('a' + i) + ":" + distances[i]);
+        if (i < numVertices - 1) System.out.print(",");
+    }
+    System.out.println();
+
+    
 
     }catch (Exception e) {
         e.printStackTrace();
